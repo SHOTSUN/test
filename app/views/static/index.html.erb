@@ -1,0 +1,93 @@
+
+
+<!-- Кнопка, открывающая модальное окно -->
+<a href="#" class="btn btn-primary">Открыть модальное окно</a>
+
+<!-- HTML-код модального окна-->
+<div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Заголовок модального окна -->
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Заголовок модального окна</h4>
+      </div>
+      <!-- Основное содержимое модального окна -->
+      <div class="modal-body">
+        Содержимое модального окна...
+      </div>
+      <!-- Футер модального окна -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-primary">Сохранить изменения</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        //при нажатию на любую кнопку, имеющую класс .btn
+        $(".btn").click(function() {
+            //открыть модальное окно с id="myModal"
+            $("#myModal").modal('show');
+        });
+    });
+</script>
+
+<% if current_user %>
+
+
+  	<% if !current_user.ban %>	
+
+
+		<% User.find_each do |user| %>
+	    
+	    
+
+	    <div id="fat-menu" class="dropdown">
+	    	<% if  user.ban %>	
+		    	<h style="color:#C0C0C0"><%= user.email %>  <%= user.provider %>  </h>
+		    <% else %>
+		    	<h style="color:#000000"><%= user.email%>  <%=user.provider %></h>
+			<% end %>
+
+			<a class="dropdown-toggle" data-toggle="dropdown">
+			   <b class="caret"></b>
+	    	</a>
+		    <ul class="dropdown-menu"> 
+		        <li><%= link_to 'Block', block_static_path(user) %></li>
+		        <li><%= link_to 'Unblock', unblock_static_path(user) %></li>
+		        <li><%= link_to 'Delete', dest_static_path(user) %></li>
+		    
+
+
+		</div>
+
+	<% end %>
+	
+	<% else %>
+		<h1> You banned</h1>
+	<% end %>
+
+
+<% else %>
+
+
+	<div class="center hero-unit">
+    	<h1>Welcome</h1>
+  		<h2>Sign in or sign up now</h3>
+	    <ul><%= link_to "Sign up now!", new_user_registration_path, class: "btn btn-large btn-primary" %></ul>
+
+		<li class="fa fa-facebook-square" aria-hidden="true"> <%= link_to 'Facebook', user_facebook_omniauth_authorize_path%></li> 
+		<li class="fa fa-twitter" aria-hidden="true"> <%= link_to 'Twitter', user_twitter_omniauth_authorize_path%></li> 
+		<li class="fa fa-vk" aria-hidden="true"> <%= link_to 'Vkontakte', user_vkontakte_omniauth_authorize_path%></li> 
+
+	    
+    </a>
+	</div>
+
+
+<% end %>
+
+
